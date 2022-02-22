@@ -1,4 +1,10 @@
 - Создаь API (RestFull)
+    addRecord       (POST)
+    updateRecord    (PUT)
+    delRecord       (DELETE)
+    getRecord       (GET)
+    showRecords     (GET)
+    getRecordsId    (GET)
 - Подключиться к БД
 - Добавить webpack
 - Подключить Swagger
