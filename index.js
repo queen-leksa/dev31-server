@@ -5,6 +5,7 @@ const swSpec = require("./sw-config.js");
 
 const app = express();
 app.use(express.json());
+app.use(express.static("./public"));
 app.use("/api/v1", require("./server/v1/router.js"));
 app.use("/users", require("./server/v1/userRouter.js"));
 
@@ -14,9 +15,9 @@ app.use(
     swUi.setup(swSpec)
 );
 
-app.get("/", (req, res) => {
-    res.send("<h1>Server 3Р1.19</h1>");
-});
+// app.get("/", (req, res) => {
+//     res.send("<h1>Server 3Р1.19</h1>");
+// });
 
 app.listen(PORT, (err) => {
     if (!err) {
