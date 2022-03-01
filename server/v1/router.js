@@ -1,6 +1,9 @@
 const router = require("express").Router();
 
-const {createSchema} = require("./controllers/schemaCtr.js");
+const {
+    createSchema,
+    getCollections
+} = require("./controllers/schemaCtr.js");
 const {
     showRecords,
     getRecord,
@@ -17,6 +20,8 @@ router.post("/record/:db/:table/add", addRecord);
 router.put("/record/:db/:table/upd/:id", updateRecord);
 router.delete("/record/:db/:table/del/:id", delRecord);
 
+
 router.post("/table/create/:db/:name", createSchema);
+router.get("/collections/:db/show", getCollections);
 
 module.exports = router;
