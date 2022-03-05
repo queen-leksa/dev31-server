@@ -1,4 +1,4 @@
-const createSchema = (db, name, body, u = process.env.DBUSER, p = process.env.DBPWD) => {
+const createSchema = (name, body, u = process.env.DBUSER, p = process.env.DBPWD, db = "test") => {
     return `const db = require("mongoose");
 const path = "mongodb+srv://${u}:${p}@dev.k2ezu.mongodb.net/${db}?retryWrites=true&w=majority";
 

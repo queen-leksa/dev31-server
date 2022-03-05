@@ -5,11 +5,17 @@ const swUi = require("swagger-ui-express");
 const swSpec = require("./sw-config.js");
 
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", "./views");
 app.use(express.json());
 app.use(cors());
 app.use(express.static("./public"));
 app.use("/api/v1", require("./server/v1/router.js"));
 app.use("/users", require("./server/v1/userRouter.js"));
+
+app.get("/schema/create", function(req, res) {
+    res.render("schemaform");
+});
 
 app.use(
     "/api-docs",

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Create schema</h1>
+    <form id="createSchema">
+        <div class="row">
+            <label for="sn" class="lbl">Schema name</label>
+            <input type="text" id="sn" name="name">
+        </div>
+        <div class="row">
+            <span class="lbl">Schema fields</span>
+            <div class="row row-inner">
+                <label for="fn-0">Field name</label>
+                <input type="text" id="fn-0" name="field-name">
+                <label for="ft-0">Field type</label>
+                <select name="field-type" id="ft-0">
+                    <option>string</option>
+                    <option>number</option>
+                    <option>boolean</option>
+                    <option>array</option>
+                    <option>object</option>
+                </select>
+                <button data-type="add" type="button" onclick="clickBtn()">+</button>
+            </div>
+        </div>
+        <button type="submit">Add schema</button>
+    </form>
+<script>
+
+    const form = document.forms.createSchema;
+    let fieldsRow = form.getElementsByClassName("row-inner");
+    const clickBtn = function() {
+        console.log(fieldsRow);
+        let row = fieldsRow[0].cloneNode(true);
+        for (let i = 0; i < 4; i++) {
+            let child = row.children[i];
+            if (child.getAttribute("for")) {
+                let val = child.getAttribute("for").split("-");
+                child.setAttribute("for", val[0] + "-" + fieldsRow.length);
+            }
+            if (child.id) {
+                let val = child.id.split("-");
+                child.id = val[0] + "-" + fieldsRow.length;
+            }
+        }
+        row.innerHTML += "<button type='button' onclick='removeBtn(this)'>x</button>";
+        form.lastElementChild.previousElementSibling.append(row);
+    }
+    const removeBtn = function(el) {
+        el.parentElement.remove();
+    }
+    let row = fieldsRow[0].cloneNode(true);
+    console.log(row);
+    // const addBtn = document.querySelector("[data-type='add']");
+    // console.log(addBtn);
+    // addBtn.addEventListener("click", function() {
+    //     let row = fieldsRow[0].cloneNode(true);
+    //     form.lastElementChild.previousElementSibling.append(row);
+    // })
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        let body = {
+            fields: []
+        };
+        for (let i = 0; i < form.elements. length; i++) {
+            let el = form.elements[i];
+            console.log(el);
+            if (el.name) {
+                if (el.name === "name") {
+                    body[el.name] = el.value;
+                } else {
+                    let n = el.id.split("-")[1];
+                    let name = el.name.split("-")[1];
+                    if (!body.fields[n]) {
+                        body.fields[n] = {};
+                    }
+                    body.fields[n][name] = el.value;
+                }
+            }
+        }
+        console.log(body);
+    })
+</script>
+</body>
+</html>

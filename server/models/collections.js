@@ -5,6 +5,7 @@ const dbPwd = process.env.DBPWD || "Qwerty123";
 const dbName = "test";
 
 const path = `mongodb+srv://${dbUser}:${dbPwd}@dev.k2ezu.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+//mongodb+srv://vasya-dev:<password>@dev.k2ezu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 db.connect(path, {
     useNewUrlParser: true,
@@ -17,7 +18,7 @@ db.connect(path, {
 
 const Schema = new db.Schema({
     name: String,
-    fields: [String]
+    fields: [Object]
 });
 
 const Collections = db.model("collections", Schema);
