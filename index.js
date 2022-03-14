@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("./public"));
 app.use("/api/v1", require("./server/v1/router.js"));
-app.use("/users", require("./server/v1/userRouter.js"));
+// app.use("/users", require("./server/v1/userRouter.js"));
 
 app.get("/schema/create", function(req, res) {
     res.render("schemaform");

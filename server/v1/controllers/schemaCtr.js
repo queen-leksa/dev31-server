@@ -31,7 +31,20 @@ const createSchema = async (req, res) => {
 
 const getCollections = async (req, res) => {
     const data = await Collections.find({}).select("-_id -__v");
-    console.log(data);
+    data.forEach(schema => {
+        try {
+            fs.readFile(`./server/models/${schema.name}.js`, "utf-8", function (err, text) {
+            });
+        } catch(e) {
+            console.log("here");
+            const file = newSchema(schema.name, JSON.stringify(schema.fields), "vasya-dev", "Qwerty123", req.params.db);
+            fs.writeFile(`./server/models/${schema.name}.js`, file, function (err) {
+                if (!err) {
+                    console.log(`Create file ${schema.name}`);
+                }
+            });
+        }
+    })
     res.json({msg: "ok", data: data});
 }
 

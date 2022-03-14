@@ -1,6 +1,6 @@
-const router = require("express").Router();
-const parser = require("body-parser").json();
-const {getUsers, addUser} = require("./controllers/userCtr.js");
+// const router = require("express").Router();
+// const parser = require("body-parser").json();
+// const {getUsers, addUser} = require("./controllers/userCtr.js");
 
 /**
 * @swagger
@@ -55,7 +55,7 @@ const {getUsers, addUser} = require("./controllers/userCtr.js");
 *                       type: string
 * */
 
-router.get("/", getUsers);
-router.post("/", parser, addUser);
-
-module.exports = router;
+// router.get("/", getUsers);
+// router.post("/", parser, addUser);
+//
+// module.exports = router;
