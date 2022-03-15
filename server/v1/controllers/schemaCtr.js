@@ -3,7 +3,7 @@ const newSchema = require("../../mainModel/schema.js");
 const Collections = require("../../mainModel/collections.js");
 const dbname = process.env.DBNAME;
 const dbpwd = process.env.DBPWD;
-const dbLink = process.env.DB;
+const dblink = process.env.DB;
 
 const getName = function(data) {
     if (data[data.length - 1] !== "s") {
@@ -24,7 +24,7 @@ const createSchema = async (req, res) => {
     } else {
         await new Collections({name: schemaName, fields: body}).save();
     }
-    const file = newSchema(schemaName, JSON.stringify(req.body), dbname, dbpwd, dbLink, req.params.db);
+    const file = newSchema(schemaName, JSON.stringify(req.body), dbname, dbpwd, dblink, req.params.db);
     fs.writeFile(`./server/models/${schemaName}.js`, file, function (err) {
         if (!err) {
             res.json({msg: "All correct"});
@@ -48,7 +48,7 @@ const getCollections = async (req, res) => {
                     body[item.name] = item.type;
                 });
                 console.log(body);
-                const file = newSchema(el.name, JSON.stringify(body), dbname, dbpwd, dbLink, req.params.db);
+                const file = newSchema(el.name, JSON.stringify(body), dbname, dbpwd, dblink, req.params.db);
                 fs.writeFile(`./server/models/${el.name}.js`, file, function (err) {
                     if (!err) {
                         console.log(`add schema ${el.name}`);
