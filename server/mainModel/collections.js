@@ -3,9 +3,9 @@ const db = require("mongoose");
 const dbname = process.env.DBNAME;
 const dbpwd = process.env.DBPWD;
 const dblink = process.env.DB;
-const dbname = "test";
+const dbn = "test";
 
-const path = `mongodb+srv://${dbname}:${dbpwd}@${dblink}/${dbname}?retryWrites=true&w=majority`;
+const path = `mongodb+srv://${dbname}:${dbpwd}@${dblink}/${dbn}?retryWrites=true&w=majority`;
 //mongodb+srv://vasya-dev:<password>@dev.k2ezu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 db.connect(path, {
