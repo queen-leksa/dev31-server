@@ -1,6 +1,9 @@
 const fs = require("fs");
-const newSchema = require("../schema.js");
-const Collections = require("../../models/collections.js");
+const newSchema = require("../../mainModel/schema.js");
+const Collections = require("../../mainModel/collections.js");
+const dbname = process.env.DBNAME;
+const dbpwd = process.env.DBPWD;
+const dbLink = process.env.DB;
 
 const getName = function(data) {
     if (data[data.length - 1] !== "s") {
@@ -21,7 +24,7 @@ const createSchema = async (req, res) => {
     } else {
         await new Collections({name: schemaName, fields: body}).save();
     }
-    const file = newSchema(schemaName, JSON.stringify(req.body), "vasya-dev", "Qwerty123", req.params.db);
+    const file = newSchema(schemaName, JSON.stringify(req.body), dbname, dbpwd, dbLink, req.params.db);
     fs.writeFile(`./server/models/${schemaName}.js`, file, function (err) {
         if (!err) {
             res.json({msg: "All correct"});
@@ -31,20 +34,30 @@ const createSchema = async (req, res) => {
 
 const getCollections = async (req, res) => {
     const data = await Collections.find({}).select("-_id -__v");
-    data.forEach(schema => {
-        try {
-            fs.readFile(`./server/models/${schema.name}.js`, "utf-8", function (err, text) {
-            });
-        } catch(e) {
-            console.log("here");
-            const file = newSchema(schema.name, JSON.stringify(schema.fields), "vasya-dev", "Qwerty123", req.params.db);
-            fs.writeFile(`./server/models/${schema.name}.js`, file, function (err) {
-                if (!err) {
-                    console.log(`Create file ${schema.name}`);
-                }
-            });
-        }
-    })
+    // console.log(data);
+    fs.readdir("./server/models", function(err, files) {
+        console.log(files);
+        files = files.map(file => file.split(".")[0]);
+        console.log(files);
+        /* Если в массиве  data file !includes data.name => create file */
+        data.forEach(el => {
+            if (!files.includes(el.name)) {
+                console.log(`no file ${el.name}`);
+                let body = {};
+                el.fields.forEach(item => {
+                    body[item.name] = item.type;
+                });
+                console.log(body);
+                const file = newSchema(el.name, JSON.stringify(body), dbname, dbpwd, dbLink, req.params.db);
+                fs.writeFile(`./server/models/${el.name}.js`, file, function (err) {
+                    if (!err) {
+                        console.log(`add schema ${el.name}`);
+                    }
+                });
+            }
+        })
+    });
+
     res.json({msg: "ok", data: data});
 }
 

@@ -1,6 +1,6 @@
-const createSchema = (name, body, u = process.env.DBUSER, p = process.env.DBPWD, db = "test") => {
+const createSchema = (name, body, u, p, link, db) => {
     return `const db = require("mongoose");
-const path = "mongodb+srv://${u}:${p}@dev.k2ezu.mongodb.net/${db}?retryWrites=true&w=majority";
+const path = "mongodb+srv://${u}:${p}@${link}/${db}?retryWrites=true&w=majority";
 
 db.connect(path, {
     useNewUrlParser: true,
